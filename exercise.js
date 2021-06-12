@@ -48,16 +48,37 @@ function curriedSum(numArgs) {
   return _curriedSum;
 }
 
-Function.prototype.curry = function (numArgs) {
-  const args = [];
-  const fn = this;
-  function _curriedFn(arg) {
-    args.push(arg);
-    if (args.length === numArgs) {
-      return fn.apply(null, args);
+// Function.prototype.curry = function (numArgs) {
+//   const args = [];
+//   const fn = this;
+//   function _curriedFn(arg) {
+//     args.push(arg);
+//     if (args.length === numArgs) {
+//       return fn.apply(null, args);
+//     } else {
+//       return _curriedFn;
+//     }
+//   }
+//   return _curriedFn;
+// };
+
+Function.prototype.curry = function (nArg) {
+  const argArray = [];
+  const _curriedFn = (arg) => {
+    argArray.push(arg);
+    if (argArray.length === nArg) {
+      // spreading the array into individual arguments
+      return this(...argArray); 
     } else {
       return _curriedFn;
     }
-  }
+  };
   return _curriedFn;
+};
+
+Function.prototype.inherits = function (BaseClass) {
+  function Surrogate () {}
+  Surrogate.prototype = BaseClass.prototype;
+  this.prototype = new Surrogate();
+  this.prototype.constructor = this;
 };
