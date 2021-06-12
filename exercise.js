@@ -12,3 +12,18 @@ function sum(...args){
          });
         return sum;
 }
+
+
+// Function.prototype.myBind = function (ctx) {
+//   const fn = this;
+//   const bindArgs = Array.from(arguments).slice(1);
+//   return function _boundFn() {
+//     const callArgs = Array.from(arguments);
+//     return fn.apply(ctx, bindArgs.concat(callArgs));
+//   };
+// };
+
+
+Function.prototype.myBind = function (ctx, ...bindArgs) {
+  return (...callArgs) => this.apply(ctx, bindArgs.concat(callArgs));
+};
